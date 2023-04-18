@@ -1,0 +1,51 @@
+
+<form [formGroup]="form" (ngSubmit)="processTask()">
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td>
+                <input type="text" size="30" formControlName="name">
+            </td>
+        </tr>
+        <tr>
+            <td>Due Date: </td>
+            <td>
+                <input type="date" size="30" formControlName="dueDate">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" [disabled]="form.invalid">Save</button>
+            </td>
+            <td>
+                <button (click)="addTask()">Add Task</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+
+<div *ngIf="itemArray.length > 0; else noTask">
+    <table formArrayName="task">
+        <tr *ngFor="let it of itemArray.controls; let i = index" [formGroupName]="i">
+            <td>task Name</td>
+            <td>
+                <input type="text" placeholder="task name" formControlName="taskName">
+            </td>
+            <td>Priority</td>
+            <td>
+                <input type="dropdown" list="priorities" placeholder="priority" formControlName="priority">
+                <datalist id="priorities">
+                  <option value="Low">
+                  <option value="Medium">
+                  <option value="High">
+                </datalist>
+            </td>
+            <button (click)="deleteTask(i)">X</button>
+        </tr>
+    </table>
+</div>
+
+<ng-template #noTask>
+    <h2>No Task</h2>
+</ng-template>
